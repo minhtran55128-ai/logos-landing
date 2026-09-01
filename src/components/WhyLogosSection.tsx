@@ -1,3 +1,5 @@
+import { Reveal } from "./Reveal"
+
 const LOGOS_INPUTS = [
   "Courses",
   "Materials",
@@ -17,7 +19,7 @@ export function WhyLogosSection() {
       className="bg-[#27323a] py-24 text-[#f7f4ee] md:py-32"
     >
       <div className="logos-section">
-        <div className="mb-14 max-w-[760px]">
+        <Reveal className="mb-14 max-w-[760px]">
           <p className="logos-mono text-[10px] font-semibold text-[#aaa6b8]">
             Why Logos
           </p>
@@ -35,10 +37,10 @@ export function WhyLogosSection() {
             organize that intelligence around the student&rsquo;s actual
             academic life.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid gap-3 md:grid-cols-2">
-          <div className="rounded-[24px] border border-white/10 bg-white/[.04] p-6 md:p-8">
+          <Reveal delay={100} className="rounded-[24px] border border-white/10 bg-white/[.04] p-6 md:p-8">
             <p className="logos-mono text-[10px] text-[#9fa9ad]">GENERAL AI</p>
             <div className="mt-10 space-y-3 text-sm text-[#c1c8c9]">
               <p className="rounded-xl bg-white/[.06] p-3">Your request</p>
@@ -51,9 +53,9 @@ export function WhyLogosSection() {
                 Powerful response
               </p>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="rounded-[24px] border border-[#6d9c96] bg-[#304348] p-6 md:p-8">
+          <Reveal delay={180} className="rounded-[24px] border border-[#6d9c96] bg-[#304348] p-6 md:p-8">
             <p className="logos-mono text-[10px] text-[#a8d9d0]">LOGOS</p>
             <div className="mt-7 flex flex-wrap gap-2">
               {LOGOS_INPUTS.map((item) => (
@@ -77,7 +79,7 @@ export function WhyLogosSection() {
                 </span>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
 
         <p className="mt-10 text-center text-lg font-semibold text-[#a8d9d0]">

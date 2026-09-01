@@ -1,7 +1,9 @@
+import { Reveal } from "./Reveal"
+
 export function MissionSection() {
   return (
     <section id="mission" className="bg-[#f1ece3] py-24 md:py-32">
-      <div className="logos-section grid gap-10 md:grid-cols-[.8fr_1.2fr] md:items-end">
+      <Reveal className="logos-section grid gap-10 md:grid-cols-[.8fr_1.2fr] md:items-end">
         <div>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
             The reason to build it
@@ -25,7 +27,7 @@ export function MissionSection() {
             more of the friction around helping them learn.
           </p>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

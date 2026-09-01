@@ -1,3 +1,5 @@
+import { Reveal } from "./Reveal"
+
 const OUTCOMES = [
   {
     number: "01",
@@ -25,7 +27,7 @@ export function OutcomeSection() {
   return (
     <section id="outcome" className="logos-section py-24 md:py-36">
       <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr]">
-        <div>
+        <Reveal>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
             What this is for
           </p>
@@ -38,12 +40,13 @@ export function OutcomeSection() {
             make support more relevant to what you are trying to learn and
             accomplish.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {OUTCOMES.map((outcome) => (
-            <div
+          {OUTCOMES.map((outcome, i) => (
+            <Reveal
               key={outcome.number}
+              delay={100 + i * 80}
               className={`logos-lift rounded-2xl p-5 ${outcome.className}`}
             >
               <span className="logos-mono text-[10px] text-[#4d9fa1]">
@@ -52,12 +55,12 @@ export function OutcomeSection() {
               <p className="mt-8 text-base font-semibold leading-5 tracking-[-.02em] text-[#34424a]">
                 {outcome.body}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
 
-      <div className="mt-20 grid gap-8 border-t border-[#d9d3c9] pt-12 md:grid-cols-2">
+      <Reveal className="mt-20 grid gap-8 border-t border-[#d9d3c9] pt-12 md:grid-cols-2">
         <div>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
             Student control
@@ -79,7 +82,7 @@ export function OutcomeSection() {
             decide.
           </p>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

@@ -1,4 +1,5 @@
 import { MessageCircle } from "lucide-react"
+import { Reveal } from "./Reveal"
 
 const CONTEXT_ITEMS = [
   { number: 1, label: "Course materials", tone: "default" },
@@ -11,7 +12,7 @@ export function ContinuitySection() {
   return (
     <section id="continuity" className="bg-[#e4f0ed] py-24 md:py-32">
       <div className="logos-section">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <Reveal className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
               Context that carries forward
@@ -27,9 +28,9 @@ export function ContinuitySection() {
             rebuilding the situation around what you are studying, relevant
             context can continue to support what you do next.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="mt-14">
+        <Reveal delay={120} className="mt-14">
           <div className="overflow-hidden rounded-[28px] border border-[#3b4b50] bg-[#1f292f] text-[#f7f4ee] shadow-[0_20px_45px_rgba(31,41,47,.15)]">
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
               <div className="flex items-center gap-2">
@@ -96,7 +97,7 @@ export function ContinuitySection() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         <p className="mt-8 text-sm font-semibold text-[#3b5e59]">
           Less repeated setup. More continuity across the way you study.

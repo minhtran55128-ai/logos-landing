@@ -19,7 +19,7 @@ export function Header() {
 
   return (
     <header className="absolute left-0 right-0 top-0 z-20">
-      <div className="logos-section flex h-[76px] items-center justify-between">
+      <div className="logos-reveal logos-section flex h-[76px] items-center justify-between">
         <button
           type="button"
           onClick={() => handleNavClick("top")}
@@ -71,7 +71,7 @@ export function Header() {
       {menuOpen && (
         <div
           id="mobile-nav"
-          className="mx-3 mt-2 flex flex-col gap-1 rounded-3xl border border-white/10 bg-[#1d232a]/98 p-4 text-sm font-semibold text-[#e7e5df] shadow-2xl backdrop-blur sm:mx-5 md:hidden"
+          className="logos-crossfade mx-3 mt-2 flex flex-col gap-1 rounded-3xl border border-white/10 bg-[#1d232a]/98 p-4 text-sm font-semibold text-[#e7e5df] shadow-2xl backdrop-blur sm:mx-5 md:hidden"
         >
           {NAV_LINKS.map((link) => (
             <button

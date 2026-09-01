@@ -6,6 +6,7 @@ import {
   MessageCircle,
   Target,
 } from "lucide-react"
+import { Reveal } from "./Reveal"
 
 const FEATURES = [
   {
@@ -63,7 +64,7 @@ export function SystemSection() {
     <section id="system" className="logos-section pb-24 md:pb-36">
       <div className="relative overflow-hidden rounded-[28px] bg-[#27323a] p-5 text-[#f7f4ee] md:p-8">
         <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <div>
+          <Reveal>
             <p className="logos-mono text-[10px] font-semibold text-[#aaa6b8]">
               One connected system
             </p>
@@ -79,13 +80,14 @@ export function SystemSection() {
               matter less than the fact that they can work from the same
               study context.
             </p>
-          </div>
+          </Reveal>
 
           <div className="relative grid gap-2 sm:grid-cols-2">
             <div className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[78%] w-[54%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#6c9c99]/50 sm:block" />
-            {FEATURES.map((feature) => (
-              <div
+            {FEATURES.map((feature, i) => (
+              <Reveal
                 key={feature.title}
+                delay={100 + i * 70}
                 className={`logos-lift relative rounded-2xl border border-white/10 p-4 ${feature.className}`}
               >
                 <feature.icon
@@ -98,7 +100,7 @@ export function SystemSection() {
                 <p className={`mt-2 text-[11px] leading-5 ${feature.bodyClassName}`}>
                   {feature.body}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

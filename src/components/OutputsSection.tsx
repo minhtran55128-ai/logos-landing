@@ -1,5 +1,6 @@
 import { MessageCircle } from "lucide-react"
 import { useState } from "react"
+import { Reveal } from "./Reveal"
 
 const TABS = [
   {
@@ -34,7 +35,7 @@ export function OutputsSection() {
 
   return (
     <section id="outputs" className="logos-section py-24 md:py-36">
-      <div className="mb-14 grid gap-8 md:grid-cols-[.9fr_1.1fr] md:items-end">
+      <Reveal className="mb-14 grid gap-8 md:grid-cols-[.9fr_1.1fr] md:items-end">
         <div>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
             From generation to usefulness
@@ -50,9 +51,9 @@ export function OutputsSection() {
           flashcards and notes. The more important question is whether those
           outputs are useful for the student receiving them.
         </p>
-      </div>
+      </Reveal>
 
-      <div className="overflow-hidden rounded-[28px] border border-[#d7d2cc] bg-[#f2eee7]">
+      <Reveal delay={100} className="overflow-hidden rounded-[28px] border border-[#d7d2cc] bg-[#f2eee7]">
         <div className="grid md:grid-cols-[.62fr_1.38fr]">
           <div className="border-b border-[#d7d2cc] bg-[#e5eee9] p-5 md:border-b-0 md:border-r md:p-8">
             <p className="logos-mono text-[9px] font-semibold text-[#55736f]">
@@ -102,7 +103,10 @@ export function OutputsSection() {
               </span>
             </div>
 
-            <div className="mt-7 rounded-2xl bg-[#fffaf2] p-5 md:p-7">
+            <div
+              key={tab.label}
+              className="logos-crossfade mt-7 rounded-2xl bg-[#fffaf2] p-5 md:p-7"
+            >
               <span className="rounded-full bg-[#a8d9d0] px-2.5 py-1 text-[9px] font-semibold text-[#3d615d]">
                 {tab.label}
               </span>
@@ -138,7 +142,7 @@ export function OutputsSection() {
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
 
       <p className="mt-8 max-w-2xl text-sm font-semibold leading-6 text-[#4d6c6b]">
         The aim is to make generation serve learning — not generation for its

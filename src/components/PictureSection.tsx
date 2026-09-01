@@ -1,4 +1,5 @@
 import { DashboardMockup } from "./DashboardMockup"
+import { Reveal } from "./Reveal"
 
 const QUESTIONS = [
   {
@@ -27,7 +28,7 @@ export function PictureSection() {
   return (
     <section id="picture" className="bg-[#e4f0ed] py-24 md:py-32">
       <div className="logos-section">
-        <div className="mb-14 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+        <Reveal className="mb-14 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
               First, the bigger academic picture
@@ -42,7 +43,7 @@ export function PictureSection() {
             Before support can become truly personal, it needs to understand
             the situation around the student.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-center">
           <div>
@@ -52,9 +53,10 @@ export function PictureSection() {
               coherent academic picture.
             </p>
             <div className="mt-8 space-y-5">
-              {QUESTIONS.map((q) => (
-                <div
+              {QUESTIONS.map((q, i) => (
+                <Reveal
                   key={q.number}
+                  delay={i * 90}
                   className="flex gap-3 border-t border-[#bed8d2] pt-4"
                 >
                   <span className="logos-mono pt-0.5 text-[10px] text-[#4d9fa1]">
@@ -68,12 +70,12 @@ export function PictureSection() {
                       {q.body}
                     </p>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
 
-          <div className="relative">
+          <Reveal delay={150} className="relative">
             <div className="absolute -right-3 -top-5 z-[1] hidden rounded-xl bg-[#f0d4c3] px-3 py-2 text-[10px] font-semibold text-[#765548] shadow-lg sm:block">
               What matters today
             </div>
@@ -81,7 +83,7 @@ export function PictureSection() {
               AI overview · on your radar · Study Plans
             </div>
             <DashboardMockup />
-          </div>
+          </Reveal>
         </div>
 
         <p className="mt-12 border-t border-[#bed8d2] pt-5 text-sm font-semibold text-[#3b5e59]">

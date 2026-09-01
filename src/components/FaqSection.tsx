@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react"
 import { useState } from "react"
+import { Reveal } from "./Reveal"
 
 const FAQS = [
   {
@@ -35,7 +36,7 @@ export function FaqSection() {
   return (
     <section id="faq" className="logos-section py-24 md:py-36">
       <div className="grid gap-12 md:grid-cols-[.8fr_1.2fr]">
-        <div>
+        <Reveal>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
             Before we begin
           </p>
@@ -44,13 +45,17 @@ export function FaqSection() {
             <br />
             <span className="text-[#4d9fa1]">belong here.</span>
           </h2>
-        </div>
+        </Reveal>
 
         <div className="border-t logos-rule">
           {FAQS.map((faq, i) => {
             const isOpen = openIndex === i
             return (
-              <div key={faq.question} className="border-b logos-rule">
+              <Reveal
+                key={faq.question}
+                delay={100 + i * 60}
+                className="border-b logos-rule"
+              >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : i)}
@@ -80,7 +85,7 @@ export function FaqSection() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             )
           })}
         </div>

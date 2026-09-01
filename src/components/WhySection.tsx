@@ -1,3 +1,5 @@
+import { Reveal } from "./Reveal"
+
 const FRAGMENTS: {
   label: string
   position: string
@@ -36,7 +38,7 @@ const FRAGMENTS: {
 export function WhySection() {
   return (
     <section id="why" className="logos-section py-24 md:py-36">
-      <div className="grid gap-10 md:grid-cols-[.82fr_1.18fr] md:gap-20">
+      <Reveal className="grid gap-10 md:grid-cols-[.82fr_1.18fr] md:gap-20">
         <div>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
             The familiar problem
@@ -63,9 +65,12 @@ export function WhySection() {
             connecting the academic picture.
           </p>
         </div>
-      </div>
+      </Reveal>
 
-      <div className="mt-16 grid gap-8 lg:grid-cols-[1.12fr_.88fr] lg:items-end">
+      <Reveal
+        className="mt-16 grid gap-8 lg:grid-cols-[1.12fr_.88fr] lg:items-end"
+        delay={100}
+      >
         <div className="logos-dash relative min-h-[360px] overflow-hidden rounded-[28px] border border-[#d5ddd9] bg-[#eef3ed] p-5 md:min-h-[420px] md:p-8">
           <div className="absolute left-1/2 top-1/2 hidden h-px w-[54%] -translate-x-1/2 bg-[#a9c9c1] md:block" />
           <div className="absolute left-1/2 top-1/2 hidden h-[54%] w-px -translate-y-1/2 bg-[#a9c9c1] md:block" />
@@ -125,7 +130,7 @@ export function WhySection() {
             </p>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }

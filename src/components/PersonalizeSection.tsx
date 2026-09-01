@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react"
+import { Reveal } from "./Reveal"
 
 const SUPPORT_ROWS = [
   {
@@ -32,7 +33,7 @@ export function PersonalizeSection() {
   return (
     <section id="personalize" className="bg-[#f1ece3] py-24 md:py-32">
       <div className="logos-section">
-        <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
+        <Reveal className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
           <div>
             <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
               Why context changes the help
@@ -47,10 +48,10 @@ export function PersonalizeSection() {
             understand, what they are preparing for, the material they are
             using, how they prefer to study and where they currently are.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-16 grid gap-8 lg:grid-cols-[.62fr_1.38fr]">
-          <div className="rounded-[26px] bg-[#27323a] p-6 text-[#f7f4ee] md:p-8">
+          <Reveal delay={100} className="rounded-[26px] bg-[#27323a] p-6 text-[#f7f4ee] md:p-8">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#a8d9d0] text-[#263a3b]">
               <Sparkles size={18} strokeWidth={2} aria-hidden="true" />
             </span>
@@ -61,12 +62,13 @@ export function PersonalizeSection() {
               It is making the help itself more relevant to the course,
               material, objective and moment.
             </p>
-          </div>
+          </Reveal>
 
           <div className="overflow-hidden rounded-[26px] border border-[#dcd4c8] bg-[#fbf8f2]">
             {SUPPORT_ROWS.map((row, i) => (
-              <div
+              <Reveal
                 key={row.number}
+                delay={120 + i * 70}
                 className={`logos-support-row flex gap-5 border-b border-[#e2dbd0] p-5 last:border-b-0 md:p-6 ${
                   i === 0 ? "bg-[#e4f0ed]/50" : ""
                 }`}
@@ -82,7 +84,7 @@ export function PersonalizeSection() {
                     {row.body}
                   </p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

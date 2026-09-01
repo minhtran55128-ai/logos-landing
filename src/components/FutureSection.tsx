@@ -1,3 +1,5 @@
+import { Reveal } from "./Reveal"
+
 const STEPS = [
   {
     number: "01",
@@ -29,7 +31,7 @@ export function FutureSection() {
   return (
     <section id="future" className="logos-section py-24 md:py-36">
       <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
-        <div>
+        <Reveal>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
             A direction, not a promise
           </p>
@@ -42,12 +44,16 @@ export function FutureSection() {
             of a student&rsquo;s studies and learning context, that
             understanding can increasingly shape how the system helps.
           </p>
-        </div>
+        </Reveal>
 
         <div className="relative pt-2">
           <div className="absolute left-4 top-7 bottom-8 w-px bg-[#cdd6d2] md:left-5" />
-          {STEPS.map((step) => (
-            <div key={step.number} className="relative flex gap-6 pb-9 last:pb-0">
+          {STEPS.map((step, i) => (
+            <Reveal
+              key={step.number}
+              delay={i * 100}
+              className="relative flex gap-6 pb-9 last:pb-0"
+            >
               <span
                 className={`relative z-[1] mt-1 flex h-3 w-3 shrink-0 rounded-full border-4 border-[#fbf7ef] ${step.dot}`}
               />
@@ -62,7 +68,7 @@ export function FutureSection() {
                   {step.body}
                 </p>
               </div>
-            </div>
+            </Reveal>
           ))}
 
           <p className="mt-10 border-t border-[#d9d3c9] pt-5 text-sm font-semibold leading-6 text-[#4d6c6b]">

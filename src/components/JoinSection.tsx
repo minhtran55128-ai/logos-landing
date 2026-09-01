@@ -1,6 +1,7 @@
 import { ArrowRight, Timer } from "lucide-react"
 import { type FormEvent, useState } from "react"
 import { FORMSPREE_ENDPOINT } from "../lib/config"
+import { Reveal } from "./Reveal"
 
 const TIMELINE = [
   { label: "STARTED", title: "Student research", dot: "bg-[#a8d9d0]" },
@@ -56,7 +57,7 @@ export function JoinSection() {
       className="mx-3 mb-3 rounded-[30px] bg-[#27323a] px-5 py-16 text-[#f7f4ee] sm:mx-5 sm:rounded-[42px] md:py-24"
     >
       <div className="logos-section grid gap-12 lg:grid-cols-[1.06fr_.94fr] lg:items-center lg:gap-20">
-        <div>
+        <Reveal>
           <div className="inline-flex items-center gap-2 rounded-full border border-[#78bcb4]/30 bg-[#31454a] px-3.5 py-2 text-[10px] font-semibold text-[#b9ded5]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#f0a071]" />
             First MVP live · early student testers
@@ -131,9 +132,9 @@ export function JoinSection() {
           <p className="mt-4 text-[10px] text-[#849295]">
             Early access updates only. Parts of the product will change.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="rounded-[26px] border border-white/10 bg-[#202b31] p-5 sm:p-7">
+        <Reveal delay={120} className="rounded-[26px] border border-white/10 bg-[#202b31] p-5 sm:p-7">
           <div className="flex items-center gap-2 border-b border-white/10 pb-4">
             <Timer size={15} strokeWidth={2} className="text-[#f0a071]" aria-hidden="true" />
             <span className="logos-mono text-[10px] font-semibold text-[#b9ded5]">
@@ -164,7 +165,7 @@ export function JoinSection() {
             We&rsquo;re building fast, testing early and letting real
             student feedback shape what comes next.
           </p>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

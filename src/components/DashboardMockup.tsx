@@ -10,7 +10,7 @@ const WORKSPACE_ITEMS = [
 
 export function DashboardMockup() {
   return (
-    <div className="logos-app-shadow relative mx-auto w-full max-w-[1010px] overflow-hidden rounded-[22px] border border-[#d5d0d9] bg-[#f3f1f5] text-left md:rounded-[28px]">
+    <div className="logos-app-shadow relative mx-auto w-full max-w-[1010px] overflow-hidden rounded-[22px] border border-[#d5d0d9] bg-[#f3f1f5] text-left transition-transform duration-500 ease-out hover:-translate-y-1.5 md:rounded-[28px]">
       <div className="flex h-12 items-center justify-between border-b border-[#dedbe2] bg-[#fbfafc] px-4 md:h-14 md:px-6">
         <div className="flex items-center gap-3">
           <Logo tone="dark" />

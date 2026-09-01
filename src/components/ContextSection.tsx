@@ -10,6 +10,7 @@ import {
   Target,
 } from "lucide-react"
 import { useState } from "react"
+import { Reveal } from "./Reveal"
 
 const MODES = [
   {
@@ -75,7 +76,7 @@ export function ContextSection() {
 
   return (
     <section id="context" className="logos-section py-24 md:py-36">
-      <div className="mb-14 max-w-[700px]">
+      <Reveal className="mb-14 max-w-[700px]">
         <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
           Then, the same context while studying
         </p>
@@ -89,19 +90,24 @@ export function ContextSection() {
           studies. It should also make the support you receive while learning
           more relevant.
         </p>
-      </div>
+      </Reveal>
 
-      <div className="grid gap-10 lg:grid-cols-[.76fr_1.24fr] lg:items-center">
+      <Reveal
+        delay={100}
+        className="grid gap-10 lg:grid-cols-[.76fr_1.24fr] lg:items-center"
+      >
         <div>
-          <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
-            {active.label}
-          </p>
-          <h3 className="logos-display mt-4 text-[clamp(2.35rem,5vw,3.5rem)] leading-[.98] text-[#2a3039]">
-            {active.heading}
-          </h3>
-          <p className="mt-5 max-w-md text-[15px] leading-7 text-[#69747e] md:text-base">
-            {active.body}
-          </p>
+          <div key={activeLabel} className="logos-crossfade">
+            <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
+              {active.label}
+            </p>
+            <h3 className="logos-display mt-4 text-[clamp(2.35rem,5vw,3.5rem)] leading-[.98] text-[#2a3039]">
+              {active.heading}
+            </h3>
+            <p className="mt-5 max-w-md text-[15px] leading-7 text-[#69747e] md:text-base">
+              {active.body}
+            </p>
+          </div>
 
           <div className="mt-8 flex flex-wrap gap-2">
             {MODES.map((mode) => {
@@ -127,14 +133,14 @@ export function ContextSection() {
         </div>
 
         <div className="relative min-h-[356px] overflow-hidden rounded-[26px] bg-[#23282d] p-5 text-[#f7f4ee] md:p-8">
-          <div className="absolute -right-16 -top-24 h-60 w-60 rounded-full bg-[#4d9fa1]/20 blur-3xl" />
+          <div className="logos-ambient absolute -right-16 -top-24 h-60 w-60 rounded-full bg-[#4d9fa1]/20 blur-3xl" />
           <div className="relative h-full">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div className="flex items-center gap-2">
                 <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#a8d9d0] text-[#242b34]">
                   <Sparkles size={14} strokeWidth={2} aria-hidden="true" />
                 </span>
-                <span className="text-xs font-semibold">
+                <span key={activeLabel} className="logos-crossfade text-xs font-semibold">
                   Logos · {active.label}
                 </span>
               </div>
@@ -144,7 +150,7 @@ export function ContextSection() {
             </div>
 
             <div className="mt-8 grid gap-5 md:grid-cols-[1fr_180px]">
-              <div>
+              <div key={activeLabel} className="logos-crossfade">
                 <p className="logos-mono text-[9px] text-[#a9a6b9]">
                   A useful starting point
                 </p>
@@ -185,7 +191,7 @@ export function ContextSection() {
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
 
       <p className="mt-12 text-center text-sm font-semibold text-[#4d9fa1]">
         Different study needs. The same academic context behind them.
