@@ -12,17 +12,66 @@ import {
 import { useState } from "react"
 
 const MODES = [
-  { label: "Understand", icon: BookOpen },
-  { label: "Ask", icon: MessageCircle },
-  { label: "Explore", icon: Compass },
-  { label: "Create", icon: PenLine },
-  { label: "Practice", icon: Target },
-  { label: "Plan", icon: CalendarDays },
-  { label: "Revise", icon: RotateCcw },
+  {
+    label: "Understand",
+    icon: BookOpen,
+    heading: "Start with the thread, not the tab.",
+    body: "Get explanations, examples, comparisons and insights around what you are learning — with the relevant course context already in view.",
+    cardHeadline:
+      "A plain-language map of the argument in Week 5, linked to your seminar notes.",
+  },
+  {
+    label: "Ask",
+    icon: MessageCircle,
+    heading: "Bring the half-formed thought.",
+    body: "Work through questions from inside your course or Folder context. Logos helps you sharpen the question before it tries to answer it.",
+    cardHeadline:
+      "“How does this challenge the model we used last Tuesday?”",
+  },
+  {
+    label: "Explore",
+    icon: Compass,
+    heading: "Follow the interesting edge.",
+    body: "Discuss difficult ideas and investigate topics more deeply without losing sight of the material and objective you started from.",
+    cardHeadline:
+      "Three related ideas, with a note on how each one changes your original claim.",
+  },
+  {
+    label: "Create",
+    icon: PenLine,
+    heading: "Make the blank page less blank.",
+    body: "Turn scattered notes into a working shape — an outline, a brief, a set of claims — while keeping your thinking in the room.",
+    cardHeadline: "An essay outline that uses your own reading notes as its spine.",
+  },
+  {
+    label: "Practice",
+    icon: Target,
+    heading: "Practice the part that matters.",
+    body: "Use questions and study material to reinforce what you are learning, with the language and purpose of your course in mind.",
+    cardHeadline:
+      "Five short prompts on causal inference, tuned to your lecture vocabulary.",
+  },
+  {
+    label: "Plan",
+    icon: CalendarDays,
+    heading: "See the week as a whole.",
+    body: "Turn larger objectives into a structured way forward, with deadlines, materials and the time you actually have in view.",
+    cardHeadline:
+      "A Tuesday plan that protects your lab prep and leaves a clean hour for reading.",
+  },
+  {
+    label: "Revise",
+    icon: RotateCcw,
+    heading: "Let the plan change with you.",
+    body: "Adjust existing plans, outputs and study material as your circumstances change — without rebuilding the whole situation from scratch.",
+    cardHeadline:
+      "A revised exam plan after your seminar moves from Wednesday to Friday.",
+  },
 ]
 
 export function ContextSection() {
-  const [active, setActive] = useState("Understand")
+  const [activeLabel, setActiveLabel] = useState(MODES[0].label)
+  const active = MODES.find((mode) => mode.label === activeLabel) ?? MODES[0]
 
   return (
     <section id="context" className="logos-section py-24 md:py-36">
@@ -45,25 +94,23 @@ export function ContextSection() {
       <div className="grid gap-10 lg:grid-cols-[.76fr_1.24fr] lg:items-center">
         <div>
           <p className="logos-mono text-[10px] font-semibold text-[#707b86]">
-            Understand
+            {active.label}
           </p>
           <h3 className="logos-display mt-4 text-[clamp(2.35rem,5vw,3.5rem)] leading-[.98] text-[#2a3039]">
-            Start with the thread, not the tab.
+            {active.heading}
           </h3>
           <p className="mt-5 max-w-md text-[15px] leading-7 text-[#69747e] md:text-base">
-            Get explanations, examples, comparisons and insights around what
-            you are learning — with the relevant course context already in
-            view.
+            {active.body}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
             {MODES.map((mode) => {
-              const isActive = mode.label === active
+              const isActive = mode.label === activeLabel
               return (
                 <button
                   key={mode.label}
                   type="button"
-                  onClick={() => setActive(mode.label)}
+                  onClick={() => setActiveLabel(mode.label)}
                   aria-pressed={isActive}
                   className={
                     isActive
@@ -88,7 +135,7 @@ export function ContextSection() {
                   <Sparkles size={14} strokeWidth={2} aria-hidden="true" />
                 </span>
                 <span className="text-xs font-semibold">
-                  Logos · Understand
+                  Logos · {active.label}
                 </span>
               </div>
               <span className="logos-mono text-[9px] text-[#9da4ac]">
@@ -102,8 +149,7 @@ export function ContextSection() {
                   A useful starting point
                 </p>
                 <p className="logos-display mt-3 text-3xl leading-[1.05] md:text-[39px]">
-                  A plain-language map of the argument in Week 5, linked to
-                  your seminar notes.
+                  {active.cardHeadline}
                 </p>
                 <button
                   type="button"
