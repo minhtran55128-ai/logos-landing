@@ -3,14 +3,18 @@ import { type FormEvent, useState } from "react"
 import { FORMSPREE_ENDPOINT } from "../lib/config"
 
 const TIMELINE = [
+  { label: "STARTED", title: "Student research", dot: "bg-[#a8d9d0]" },
   {
-    label: "WEEK 1",
-    title: "Product thesis + student research",
+    label: "NOW",
+    title: "First MVP live with early testers",
     dot: "bg-[#a8d9d0]",
   },
-  { label: "WEEK 2", title: "First MVP being built", dot: "bg-[#a8d9d0]" },
-  { label: "NEXT", title: "Put it in students’ hands", dot: "bg-[#a8d9d0]" },
-  { label: "LEARN", title: "Build what genuinely helps", dot: "bg-[#f0a071]" },
+  { label: "NEXT", title: "Invite the next group", dot: "bg-[#f0a071]" },
+  {
+    label: "BUILD",
+    title: "Improve Logos with students",
+    dot: "bg-[#f0a071]",
+  },
 ]
 
 type Status = "idle" | "submitting" | "success" | "error"
@@ -55,7 +59,7 @@ export function JoinSection() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-[#78bcb4]/30 bg-[#31454a] px-3.5 py-2 text-[10px] font-semibold text-[#b9ded5]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#f0a071]" />
-            Started August 2026 · First MVP in development
+            First MVP live · early student testers
           </div>
 
           <p className="logos-mono mt-8 text-[10px] font-semibold text-[#a8d9d0]">
@@ -66,26 +70,15 @@ export function JoinSection() {
             <span className="text-[#a8d9d0]">not just for them.</span>
           </h2>
 
-          <div className="mt-7 max-w-xl space-y-5 text-[15px] leading-7 text-[#b7c1c2]">
-            <p>
-              Logos started only two weeks ago. We&rsquo;re already building
-              the first MVP and putting it in front of students as early as
-              possible.
-            </p>
-            <p>
-              Instead of spending months guessing what students need, we want
-              to learn directly from how you study, what frustrates you and
-              what would genuinely make your studying better.
-            </p>
-            <p className="font-semibold text-[#d4eee8]">
-              Join early access, try the first versions and help us
-              understand what works, what doesn&rsquo;t and what you wish
-              existed.
-            </p>
-          </div>
+          <p className="mt-7 max-w-xl text-[15px] leading-7 text-[#b7c1c2]">
+            Our first MVP is live and already in the hands of our first
+            group of student testers. Join the waitlist to be among the
+            next to try Logos, share what works and help shape what we
+            build next.
+          </p>
 
           <p className="mt-7 text-[12px] font-semibold text-[#9fe2dc]">
-            For students who want to help shape the first version.
+            Try it early. Help shape what comes next.
           </p>
 
           <div className="mt-7 max-w-[600px]">
@@ -94,7 +87,7 @@ export function JoinSection() {
                 role="status"
                 className="rounded-2xl border border-white/15 bg-white/[.06] p-5 text-sm text-[#d4eee8]"
               >
-                You&rsquo;re on the list — we&rsquo;ll email you as early
+                You&rsquo;re on the list. We&rsquo;ll email you as early
                 access opens up.
               </div>
             ) : (
@@ -120,7 +113,7 @@ export function JoinSection() {
                   disabled={status === "submitting"}
                   className="logos-button flex items-center justify-center gap-2 rounded-full bg-[#27323a] px-5 py-3 text-[12px] font-bold text-[#f7f4ee] disabled:opacity-60"
                 >
-                  {status === "submitting" ? "Joining…" : "Join early access"}
+                  {status === "submitting" ? "Joining…" : "Join the waitlist"}
                   <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />
                 </button>
               </form>
@@ -129,8 +122,8 @@ export function JoinSection() {
             {status === "error" && (
               <p role="alert" className="mt-3 text-[11px] text-[#f0a071]">
                 {FORMSPREE_ENDPOINT
-                  ? "Something went wrong sending that — please try again in a moment."
-                  : "The waitlist form isn't connected yet — set VITE_FORMSPREE_ENDPOINT to enable it."}
+                  ? "Something went wrong sending that. Please try again in a moment."
+                  : "The waitlist form isn't connected yet. Set VITE_FORMSPREE_ENDPOINT to enable it."}
               </p>
             )}
           </div>
@@ -168,9 +161,8 @@ export function JoinSection() {
           </div>
 
           <p className="mt-8 border-t border-white/10 pt-5 text-[12px] leading-6 text-[#96a3a4]">
-            Fast does not mean finished. It means we want to learn in the
-            open, while there is still time for student feedback to change
-            what gets built next.
+            We&rsquo;re building fast, testing early and letting real
+            student feedback shape what comes next.
           </p>
         </div>
       </div>
