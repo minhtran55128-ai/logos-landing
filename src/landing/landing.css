@@ -1,0 +1,2101 @@
+/* Landing page styles. Everything is scoped under .landing-root so none of these
+   tokens or rules can reach the rest of the app. Values come from the Figma
+   "Landing: Design Reference" frame (2176:1285). */
+
+.landing-root {
+  /* Sizing — note this scale is NOT Tailwind's default (md is 12px, not 16px) */
+  --landing-space-xxs: 2px;
+  --landing-space-xs: 4px;
+  --landing-space-sm: 8px;
+  --landing-space-md: 12px;
+  --landing-space-lg: 20px;
+  --landing-space-xl: 24px;
+  --landing-space-2xl: 36px;
+  --landing-space-3xl: 48px;
+  --landing-space-4xl: 60px;
+  --landing-content-max: 1300px;
+
+  /* Section rhythm. Figma uses literal 100px and 150px here (no Sizing variable
+     exists above 60px), and only in the desktop frame; tablet and mobile stay on
+     the token scale. Overridden at >= 1024px below. */
+  --landing-section-pad-y: var(--landing-space-4xl);
+  --landing-hero-pad-top: var(--landing-space-4xl);
+  --landing-hero-gap: var(--landing-space-3xl);
+  --landing-hero-text-gap: var(--landing-space-2xl);
+  --landing-block-gap: var(--landing-space-2xl);
+  --landing-list-gap: var(--landing-space-xl);
+
+  --landing-radius-xs: 4px;
+  --landing-radius-sm: 6px;
+  --landing-radius-md: 10px;
+  --landing-radius-lg: 16px;
+  --landing-radius-full: 999px;
+  /* Manual: the closing CTA card uses 20px, which has no Radius variable */
+  --landing-radius-xl: 20px;
+
+  --landing-brand-primary: #fa520f;
+  /* The brand orange with about 12% black mixed in; used for the CTA hover */
+  --landing-brand-primary-hover: #dc480d;
+  --landing-brand-soft: #ffbfa6;
+  --landing-text-primary: #1c1c22;
+  --landing-text-muted: #454545;
+  /* Manual: the CTA title and footer links use pure black, and the footer tagline
+     and copyright use the design system's secondary text grey. Neither matches
+     Landing/Text/Primary, so they are kept separate rather than remapped. */
+  --landing-text-black: #000000;
+  --landing-text-secondary: #6e6e7a;
+  --landing-surface-white: #ffffff;
+  --landing-surface-placeholder: #d9d9d9;
+  --landing-border-default: #e1e1e6;
+  /* Manual: a light grey between white and the border grey, for hover fills */
+  --landing-surface-hover: #f4f4f6;
+  /* Waitlist form tokens, from the "Waitlist / Design Reference" frame — not
+     used anywhere else on the site, so not part of the original token set. */
+  --landing-surface-subtle: #f7f7f8;
+  --landing-color-error: #ff383e;
+  --landing-color-focus-ring: #0078f1;
+
+  --landing-feature-orange-bg: #fff3ea;
+  --landing-feature-orange-panel: #ffb387;
+  --landing-feature-yellow-bg: #fff7dc;
+  --landing-feature-yellow-panel: #ffdc9b;
+  --landing-feature-green-bg: #f4ffdc;
+  --landing-feature-green-panel: #ccf893;
+  --landing-feature-teal-bg: #e3fff6;
+  --landing-feature-teal-panel: #93f8e2;
+
+  --landing-showcase-peach: #fff5f1;
+  --landing-showcase-cream: #fff9f1;
+  --landing-showcase-ivory: #fffdf1;
+
+  --landing-font-display: "Outfit", ui-sans-serif, sans-serif;
+  --landing-font-body: "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+  --landing-font-ui: "Inter", ui-sans-serif, sans-serif;
+
+  /* Side padding: lg at 375, 2xl at 768, 3xl at 1440 */
+  --landing-side-padding: var(--landing-space-lg);
+
+  background: var(--landing-surface-white);
+  color: var(--landing-text-primary);
+  font-family: var(--landing-font-body);
+  padding-inline: var(--landing-side-padding);
+  /* Figma's page frame ends 60px below the last section, and there is no footer */
+  padding-bottom: var(--landing-space-4xl);
+}
+
+@media (min-width: 768px) {
+  .landing-root {
+    --landing-side-padding: var(--landing-space-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-root {
+    --landing-side-padding: var(--landing-space-3xl);
+    --landing-section-pad-y: 100px;
+    --landing-hero-pad-top: 150px;
+    --landing-hero-gap: 100px;
+    --landing-hero-text-gap: var(--landing-space-xl);
+    --landing-block-gap: var(--landing-space-3xl);
+    --landing-list-gap: var(--landing-space-3xl);
+  }
+}
+
+/* ---------- Layout shells ---------- */
+
+.landing-shell {
+  width: 100%;
+  max-width: var(--landing-content-max);
+  margin-inline: auto;
+}
+
+.landing-section {
+  padding-block: var(--landing-section-pad-y);
+}
+
+.landing-section-hero {
+  padding-top: var(--landing-hero-pad-top);
+}
+
+/* Mission, FAQ and the closing CTA get 30px more than the standard section
+   padding, top and bottom (130px desktop, 90px tablet and mobile) */
+.landing-section-mission,
+.landing-section-faq,
+.landing-section-cta {
+  padding-block: calc(var(--landing-section-pad-y) + 30px);
+}
+
+/* Section padding already keeps headings well clear of the viewport edge when an
+   anchor scrolls into view, so no extra scroll margin is needed. */
+.landing-root :where([id]) {
+  scroll-margin-top: 0;
+}
+
+/* ---------- Typography ---------- */
+
+.landing-display {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 42px;
+  line-height: normal;
+  color: var(--landing-brand-primary);
+}
+
+/* Typography/Heading/H1 (Outfit Bold 27/33, +2px throughout for readability) */
+.landing-h1 {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 29px;
+  line-height: 35px;
+}
+
+/* Typography/Heading/H3 (Outfit SemiBold 17/24, +2px throughout for readability) */
+.landing-h3 {
+  font-family: var(--landing-font-display);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 26px;
+}
+
+/* Hero subheadline: Inter Medium 14/22 (H4) on tablet and mobile, H3 on desktop.
+   +2px throughout for readability. */
+.landing-hero-sub {
+  font-family: var(--landing-font-ui);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@media (min-width: 1024px) {
+  .landing-hero-sub {
+    font-family: var(--landing-font-display);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 26px;
+  }
+}
+
+.landing-section-title {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 32px;
+  color: var(--landing-brand-primary);
+}
+
+.landing-section-title-semibold {
+  font-family: var(--landing-font-display);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: normal;
+}
+
+.landing-nav-link {
+  font-family: var(--landing-font-display);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: normal;
+  color: var(--landing-text-primary);
+}
+
+.landing-nav-link:focus-visible {
+  color: var(--landing-brand-primary);
+}
+
+@media (hover: hover) {
+  .landing-nav-link:hover {
+    color: var(--landing-brand-primary);
+  }
+}
+
+.landing-h2 {
+  font-family: var(--landing-font-display);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.landing-h4 {
+  font-family: var(--landing-font-ui);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.landing-body {
+  font-family: var(--landing-font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.landing-body-sm {
+  font-family: var(--landing-font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@media (min-width: 768px) {
+  .landing-display {
+    font-size: 57px;
+  }
+
+  .landing-section-title {
+    font-size: 34px;
+    line-height: 35px;
+  }
+
+  .landing-section-title-semibold {
+    font-size: 34px;
+  }
+}
+
+/* ---------- CTA button ---------- */
+
+.landing-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--landing-space-xs);
+  padding: 7px 16px;
+  border-radius: var(--landing-radius-xs);
+  background: var(--landing-brand-primary);
+  color: var(--landing-surface-white);
+  font-family: var(--landing-font-ui);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Secondary variant: same shape and type as the CTA, white fill and a border. The
+   padding is one pixel smaller on each side so the border keeps the 36px height. */
+.landing-cta-secondary {
+  padding: 6px 15px;
+  border: 1px solid var(--landing-border-default);
+  background: var(--landing-surface-white);
+  color: var(--landing-text-primary);
+}
+
+/* Below 360px the logo plus the full label no longer fit side by side, so the
+   label wraps instead of overflowing. Figma has no frame narrower than 375px. */
+@media (max-width: 359px) {
+  .landing-cta {
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+@media (hover: hover) {
+  .landing-cta:not(.landing-cta-secondary):hover {
+    background: var(--landing-brand-primary-hover);
+  }
+
+  .landing-cta-secondary:hover,
+  .landing-nav-toggle:hover {
+    background: var(--landing-surface-hover);
+  }
+}
+
+/* Press feedback: buttons and nav links shrink slightly while held down */
+.landing-cta,
+.landing-nav-toggle,
+.landing-nav-link,
+.landing-nav-menu-link {
+  transition-property: color, background-color, transform;
+  transition-duration: 150ms, 150ms, 120ms;
+  transition-timing-function: ease-out;
+}
+
+.landing-nav-link {
+  display: inline-block;
+}
+
+.landing-cta:active,
+.landing-nav-toggle:active,
+.landing-nav-link:active,
+.landing-nav-menu-link:active {
+  transform: scale(0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-cta:active,
+  .landing-nav-toggle:active,
+  .landing-nav-link:active,
+  .landing-nav-menu-link:active {
+    transform: none;
+  }
+}
+
+.landing-root :where(a, button):focus-visible {
+  outline: 2px solid var(--landing-brand-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Nav ---------- */
+
+/* Same 119 x 36 box as before: 30.76px mark, 13.87px gap, 25px wordmark */
+.landing-lockup {
+  display: flex;
+  align-items: center;
+  gap: 13.87px;
+  width: 119px;
+  height: 36px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.landing-lockup-word {
+  font-family: var(--landing-font-display);
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 1;
+  color: var(--landing-brand-primary);
+  /* Centring the line box puts the lowercase letters about 3px below the mark's
+     centre; this nudge splits the difference between the capital L and them. */
+  position: relative;
+  top: -1.5px;
+}
+
+.landing-header {
+  position: relative;
+  /* Above the pinned headline of the scroll scene so the open menu is never covered */
+  z-index: 20;
+}
+
+/* Phones: logo and menu button. From 1024px: logo, links centred, buttons at the
+   right. In between the links live in the menu and the buttons stay in the bar. */
+.landing-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--landing-space-lg);
+}
+
+.landing-nav-links {
+  display: none;
+}
+
+.landing-nav-link {
+  white-space: nowrap;
+}
+
+.landing-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--landing-space-md);
+}
+
+/* Below 600px the bar only has room for the logo and the menu button */
+.landing-nav-bar-button {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .landing-nav-bar-button {
+    display: inline-flex;
+  }
+}
+
+.landing-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--landing-border-default);
+  border-radius: var(--landing-radius-xs);
+  background: var(--landing-surface-white);
+  cursor: pointer;
+}
+
+.landing-nav-toggle svg path {
+  stroke: var(--landing-text-primary);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.landing-nav-menu {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% - var(--landing-space-sm));
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-md);
+  padding: var(--landing-space-md);
+  border: 1px solid var(--landing-border-default);
+  border-radius: var(--landing-radius-lg);
+  background: var(--landing-surface-white);
+  box-shadow: 0 12px 32px rgb(28 28 34 / 0.1);
+}
+
+.landing-nav-menu-link {
+  display: block;
+  padding: var(--landing-space-md) var(--landing-space-md);
+  border-radius: var(--landing-radius-sm);
+  font-family: var(--landing-font-display);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: normal;
+  color: var(--landing-text-primary);
+}
+
+.landing-nav-menu-link:focus-visible {
+  color: var(--landing-brand-primary);
+}
+
+@media (hover: hover) {
+  .landing-nav-menu-link:hover {
+    color: var(--landing-brand-primary);
+    background: var(--landing-showcase-peach);
+  }
+}
+
+/* The two buttons only appear in the menu on phones, where the bar has no room */
+.landing-nav-menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+  padding-top: var(--landing-space-md);
+  border-top: 1px solid var(--landing-border-default);
+}
+
+.landing-nav-menu-actions .landing-cta {
+  width: 100%;
+  padding-block: 11px;
+}
+
+.landing-nav-menu-actions .landing-cta-secondary {
+  padding-block: 10px;
+}
+
+@media (min-width: 600px) {
+  .landing-nav-menu-actions {
+    display: none;
+  }
+
+  .landing-nav-menu {
+    inset-inline: auto 0;
+    width: 280px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .landing-nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--landing-space-2xl);
+  }
+
+  .landing-nav-actions {
+    justify-self: end;
+  }
+
+  .landing-nav-toggle,
+  .landing-nav-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .landing-nav-links {
+    gap: var(--landing-space-4xl);
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.landing-hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--landing-hero-gap);
+}
+
+.landing-hero-text {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--landing-hero-text-gap);
+}
+
+/* Only where the nav bar's own Login button is hidden behind the hamburger
+   menu — see .landing-nav-bar-button's matching breakpoint. */
+/* Tighter than .landing-hero-text's own gap — the two buttons read as one
+   action group, not separate blocks like the headline/subheadline above. */
+.landing-hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--landing-space-md);
+}
+
+.landing-hero-login {
+  display: inline-flex;
+}
+
+@media (min-width: 600px) {
+  .landing-hero-login {
+    display: none;
+  }
+}
+
+.landing-hero-media {
+  width: 100%;
+  max-width: 1012px;
+  margin-inline: auto;
+  padding: var(--landing-space-sm);
+  border-radius: var(--landing-radius-lg);
+  background: var(--landing-brand-soft);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .landing-hero-media {
+    padding: var(--landing-space-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-display {
+    font-size: 62px;
+    line-height: 1.152;
+  }
+
+  .landing-hero-media {
+    max-width: 1100px;
+  }
+}
+
+.landing-hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 972 / 554.2526245117188;
+  object-fit: cover;
+  border-radius: var(--landing-radius-md);
+}
+
+/* ---------- Trust band ---------- */
+
+.landing-trust {
+  padding-block: calc(var(--landing-space-2xl) + 60px);
+}
+
+.landing-trust-heading {
+  font-family: var(--landing-font-ui);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--landing-text-secondary);
+  margin-bottom: var(--landing-space-3xl);
+}
+
+.landing-trust-track-wrap {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.landing-trust-track {
+  display: flex;
+  align-items: center;
+  /* Spacing lives on each logo (margin-right below), not here as a flex
+     `gap` — see the comment there for why that matters for the loop. */
+  width: max-content;
+  animation: landing-trust-scroll 32s linear infinite;
+  /* Hints to the browser that this transform is about to keep changing, so it
+     stays on the GPU instead of re-rasterising every frame — the difference
+     between a smooth loop and a visibly stuttering one. */
+  will-change: transform;
+}
+
+/* Base height for every logo — with width following from its own aspect
+   ratio, so nothing is stretched. Individual overrides below size specific
+   logos relative to this base. */
+.landing-trust-logo {
+  display: block;
+  height: 50px;
+  width: auto;
+  margin-right: var(--landing-space-4xl);
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.5);
+}
+
+/* The Stockholm University source file is a white mark meant for a dark
+   background; inverting it turns white into a dark grey that reads here. */
+.landing-trust-logo[data-invert] {
+  filter: invert(1) grayscale(1) opacity(0.5);
+}
+
+/* Per-logo height adjustments off the 50px base. */
+.landing-trust-logo[data-logo="uu"] {
+  height: 72px;
+}
+
+.landing-trust-logo[data-logo="liu"] {
+  height: 36px;
+}
+
+.landing-trust-logo[data-logo="chalmers"] {
+  height: 38px;
+}
+
+.landing-trust-logo[data-logo="kau"] {
+  height: 58px;
+}
+
+@keyframes landing-trust-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    /* Exactly one copy's width — the list is rendered twice, so this loops
+       seamlessly with no visible jump or gap. -50% only lands there because
+       every logo (including the last one) carries its own trailing spacing:
+       with an even number of logos, a flex `gap` instead skips the spacing
+       after the very last item, so scrollWidth isn't a clean 2x multiple of
+       one copy's width and -50% overshoots the real halfway point. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-trust-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Only the un-duplicated set (9 logos) — the second copy exists purely for
+     the loop. */
+  .landing-trust-track > :nth-child(n + 10) {
+    display: none;
+  }
+}
+
+/* ---------- Scroll scene ---------- */
+
+/* Features, product video and showcase form one section. Without JavaScript, or
+   with reduced motion, this is the plain static layout: the vertical gaps below
+   match the old separate sections (two section paddings between groups). */
+.landing-scene {
+  --landing-scene-header-pad: 24px;
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--landing-section-pad-y);
+}
+
+.landing-scene-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-md);
+  margin-bottom: var(--landing-block-gap);
+}
+
+.landing-scene > .landing-video-frame,
+.landing-scene > .landing-scene-mobile-highlight,
+.landing-scene > .landing-showcase-list {
+  margin-top: calc(2 * var(--landing-section-pad-y));
+}
+
+/* Mobile: the video frame (a big visual box) is replaced by a plain text
+   block, so the showcase cards below it no longer need nearly as much room
+   to read as a separate section — everything here is one continuous read. */
+@media (max-width: 767px) {
+  .landing-scene > .landing-showcase-list {
+    margin-top: var(--landing-block-gap);
+  }
+}
+
+/* Desktop and tablet: the headline stays pinned while the cards move. Stacking
+   from back to front: feature cards, showcase cards (each behind the one above
+   it), the video box, then the headline. The opaque box is what "swallows" the
+   feature cards and what the first showcase card slides out from behind. */
+.landing-scene[data-scene="scroll"] {
+  padding-top: calc(var(--landing-section-pad-y) - var(--landing-scene-header-pad));
+}
+
+.landing-scene[data-scene="scroll"] .landing-scene-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  /* A small bottom padding, smaller than the top — most of the old 24px gap
+     below the text was empty white space; this keeps a little breathing
+     room without bringing all of it back. */
+  padding-top: var(--landing-scene-header-pad);
+  padding-bottom: 8px;
+  margin-bottom: var(--landing-block-gap);
+  background: var(--landing-surface-white);
+}
+
+/* Soft edge so cards fade under the pinned headline instead of being cut off */
+.landing-scene[data-scene="scroll"] .landing-scene-header::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: 12px;
+  pointer-events: none;
+  background: linear-gradient(var(--landing-surface-white), rgb(255 255 255 / 0));
+}
+
+.landing-scene[data-scene="scroll"] [data-scene-box] {
+  position: relative;
+  z-index: 4;
+  /* Extra room between the feature cards and the box gives the intake a longer
+     stretch of scrolling to play out over. */
+  margin-top: calc(2 * var(--landing-section-pad-y) + 100px);
+}
+
+/* --p runs 0 to 1 as a feature card is drawn into the box: it moves to the box
+   centre, shrinks and tilts, ending fully hidden behind the box. */
+.landing-scene[data-scene="scroll"] [data-scene-intake] {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+  transform: translate(
+      calc(var(--tx, 0px) * var(--p, 0)),
+      calc(var(--ty, 0px) * var(--p, 0))
+    )
+    rotate(calc(var(--rot, 0deg) * var(--p, 0)))
+    scale(calc(1 - (1 - var(--s1, 1)) * var(--p, 0)));
+}
+
+/* --q runs 0 to 1 as a showcase card slides out: it starts small and hidden
+   behind the bottom edge of the element above it, then drops into place. */
+.landing-scene[data-scene="scroll"] [data-scene-output] {
+  position: relative;
+  will-change: transform;
+  transform-origin: top center;
+  transform: translateY(calc(var(--y0, 0px) * (1 - var(--q, 1))))
+    scale(calc(var(--s0, 1) + (1 - var(--s0, 1)) * var(--q, 1)));
+}
+
+.landing-scene[data-scene="scroll"] .landing-showcase-list > :nth-child(1) {
+  z-index: 3;
+}
+
+.landing-scene[data-scene="scroll"] .landing-showcase-list > :nth-child(2) {
+  z-index: 2;
+}
+
+.landing-scene[data-scene="scroll"] .landing-showcase-list > :nth-child(3) {
+  z-index: 1;
+}
+
+/* Mobile: no pinning. Each card fades and slides in as it scrolls into view. */
+.landing-scene[data-scene="reveal"] [data-reveal] {
+  opacity: 0;
+  translate: 0 32px;
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    translate 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-scene[data-scene="reveal"] [data-reveal][data-revealed="true"] {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ---------- Legal pages (terms, privacy) ---------- */
+
+.landing-legal {
+  padding-top: var(--landing-space-4xl);
+}
+
+.landing-legal-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+  max-width: 720px;
+  margin-inline: auto;
+  padding-bottom: var(--landing-space-2xl);
+  border-bottom: 1px solid var(--landing-border-default);
+}
+
+.landing-legal-title {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.15;
+  color: var(--landing-brand-primary);
+}
+
+@media (min-width: 1024px) {
+  .landing-legal-title {
+    font-size: 44px;
+  }
+}
+
+.landing-legal-updated {
+  color: var(--landing-text-secondary);
+}
+
+.landing-legal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-3xl);
+  max-width: 720px;
+  margin-inline: auto;
+  padding-top: var(--landing-space-3xl);
+}
+
+.landing-legal-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-md);
+}
+
+.landing-legal-heading {
+  color: var(--landing-text-primary);
+}
+
+.landing-legal-paragraph {
+  color: var(--landing-text-muted);
+}
+
+.landing-legal-link {
+  color: var(--landing-brand-primary);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .landing-legal-link:hover {
+    color: var(--landing-brand-primary-hover);
+  }
+}
+
+/* ---------- Feature cards ---------- */
+
+/* Reflows 1 -> 2 -> 4. The 4-up breakpoint is 1120px rather than 1024px because
+   four cards at their 240px minimum plus gaps and side padding do not fit below
+   that; a plain wrapping row would leave a stretched orphan card instead. */
+.landing-feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--landing-space-lg);
+}
+
+@media (min-width: 768px) {
+  .landing-feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1120px) {
+  .landing-feature-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Card height hugs its content: a 126px text block (title plus room for a
+   two-line 16px description) plus a 245px visual panel, 371px in total. */
+.landing-feature-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border-radius: var(--landing-radius-lg);
+  overflow: hidden;
+}
+
+.landing-feature-card-content {
+  display: flex;
+  height: 126px;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+  padding: var(--landing-space-lg);
+  overflow: hidden;
+}
+
+/* The description's own indent (below) narrows its available width enough to
+   sometimes wrap to a 3rd line, so mobile gets a little extra room. */
+@media (max-width: 767px) {
+  .landing-feature-card-content {
+    height: 134px;
+  }
+}
+
+.landing-feature-card-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+/* Stands in for the (hidden, below 768px) screenshot panel, next to the
+   title — see .landing-feature-card-visual below. */
+.landing-feature-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--landing-radius-sm);
+  color: var(--landing-text-primary);
+}
+
+@media (min-width: 768px) {
+  .landing-feature-card-icon {
+    display: none;
+  }
+}
+
+/* Lines the description up under the title text, not the icon beside it —
+   36px icon + the header's own gap. */
+@media (max-width: 767px) {
+  .landing-feature-card-content .landing-body {
+    margin-left: calc(36px + 13px);
+  }
+}
+
+.landing-feature-card-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 245px;
+  flex-shrink: 0;
+  width: 100%;
+  padding: var(--landing-space-lg);
+  border-radius: var(--landing-radius-lg);
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .landing-feature-card-visual {
+    display: none;
+  }
+}
+
+/* Illustrations keep their aspect ratio and shrink to fit the narrowest panel */
+.landing-feature-card-visual picture {
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.landing-feature-card-visual img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- Product video placeholder ---------- */
+
+/* --f (0 to 1) is how full the box is. At 0 it is the resting look: white fill,
+   dashed grey outline, grey lockup. At 1 it is the "full" look: peach fill, solid
+   orange outline, orange lockup. The scroll scene sets --f as feature cards go
+   in; anywhere else it stays 0. Each colour has a plain fallback before its
+   color-mix line for browsers without color-mix. */
+.landing-video-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 688px;
+  margin-inline: auto;
+  height: 220px;
+  border-radius: var(--landing-radius-md);
+  background: var(--landing-surface-white);
+  background: color-mix(
+    in srgb,
+    var(--landing-feature-orange-bg) calc(var(--f, 0) * 100%),
+    var(--landing-surface-white)
+  );
+  overflow: hidden;
+}
+
+/* Below 768px this box isn't driven by anything (the scroll-jacked "cards draw
+   into the box" animation only runs at >= 768px — see useScrollScene.ts) and
+   reads as an empty dashed placeholder, so mobile shows a heading and copy
+   instead (.landing-scene-mobile-highlight below). */
+@media (max-width: 767px) {
+  .landing-video-frame {
+    display: none;
+  }
+}
+
+.landing-scene-mobile-highlight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+}
+
+@media (min-width: 768px) {
+  .landing-scene-mobile-highlight {
+    display: none;
+  }
+}
+
+/* A CSS dashed border cannot set dash length or close its gaps, so the outline is
+   an SVG rect. Its stroke is centred on the edge and the outer half is clipped by
+   the frame, so the visible width is half the stroke: 1px at rest, 3px when full.
+   The 14px dashes stay put while the gaps close from 14px to 0. */
+.landing-video-border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.landing-video-border rect {
+  stroke: var(--landing-text-secondary);
+  stroke: color-mix(
+    in srgb,
+    var(--landing-brand-primary) calc(var(--f, 0) * 100%),
+    var(--landing-text-secondary)
+  );
+  stroke-width: 2px;
+  stroke-width: calc(2px + 4px * var(--f, 0));
+  stroke-dasharray: 14px 14px;
+  stroke-dasharray: 14px calc(14px * (1 - var(--f, 0)));
+}
+
+.landing-video-wordmark {
+  color: var(--landing-text-muted);
+  color: color-mix(
+    in srgb,
+    var(--landing-brand-primary) calc(var(--f, 0) * 100%),
+    var(--landing-text-muted)
+  );
+}
+
+/* The grey mark sits on top of the orange one and fades out as the box fills */
+.landing-mark-fade {
+  opacity: calc(1 - var(--f, 0));
+}
+
+@media (min-width: 768px) {
+  .landing-video-frame {
+    height: 480px;
+  }
+}
+
+/* ---------- Showcase ---------- */
+
+.landing-showcase-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-list-gap);
+}
+
+.landing-showcase-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-2xl);
+  padding: var(--landing-space-2xl) var(--landing-space-xl) 0;
+  border: 1px solid var(--landing-border-default);
+  border-radius: var(--landing-radius-lg);
+  overflow: hidden;
+}
+
+.landing-showcase-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-xl);
+}
+
+.landing-showcase-benefit {
+  font-weight: 500;
+}
+
+.landing-showcase-media {
+  width: 100%;
+  height: 240px;
+  border: 1px solid var(--landing-border-default);
+  border-bottom: 0;
+  border-radius: var(--landing-radius-md) var(--landing-radius-md) 0 0;
+  overflow: hidden;
+}
+
+/* Tablet only: the media box (and everything inside it — the real screenshots
+   via object-fit: cover, and the card stack via height: 100%) grows 50px
+   taller, so the extra space is filled with more of the actual visual instead
+   of sitting empty below it. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .landing-showcase-media {
+    height: 290px;
+  }
+}
+
+.landing-showcase-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.landing-showcase-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+.landing-showcase-media-empty {
+  background: var(--landing-surface-placeholder);
+}
+
+/* The card stack's own cards already look like cards (colour, radius, border
+   all baked into their SVGs), so the outer frame every other showcase media
+   box gets is redundant here — drop it for this one case only. */
+.landing-showcase-media:has(.landing-card-stack) {
+  border: none;
+}
+
+@media (min-width: 1024px) {
+  .landing-showcase-card {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--landing-space-4xl);
+    /* Figma's 462px plus 90px */
+    height: 552px;
+    padding: var(--landing-space-4xl) var(--landing-space-2xl) 0;
+  }
+
+  .landing-showcase-text {
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .landing-showcase-benefit {
+    font-weight: 600;
+  }
+
+  /* 60px top padding + 515px media overflows the 552px card on purpose; the
+     card clips it so the screenshot bleeds off the bottom edge. */
+  .landing-showcase-media {
+    flex: 1 0 0;
+    min-width: 0;
+    height: 515px;
+    border: 1px solid var(--landing-border-default);
+    border-radius: var(--landing-radius-md);
+  }
+
+  .landing-showcase-card[data-image-position="left"] .landing-showcase-media {
+    order: -1;
+  }
+}
+
+/* ---------- Showcase card stack (Minneskort / Quiz / Förklaring) ---------- */
+/* Three real exported cards (header, border and screenshot all baked into
+   each SVG), stair-stepped down and to the right: back card first, each next
+   one further along the diagonal, front card on top. */
+
+.landing-card-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Headroom, not a size: .landing-showcase-media (the ancestor that gives
+     this component its box) clips anything past its own edge. Without this,
+     the back card's hover lift below would push it above that edge and get
+     cut off — this is the actual fix for that, not a wrapper overflow
+     property (nothing in this component sets overflow: hidden itself except
+     each card's own corner-rounding, which is unrelated). */
+  padding-top: 20px;
+}
+
+.landing-stack-card {
+  --stack-hover-lift: 0px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  /* 56% is the design's base width, 15px smaller than that, then scaled up
+     50%, then 30% more (1.5 * 1.3 = 1.95) — but capped at 100% minus the
+     front card's own 48px left offset, so even the front card's right edge
+     never goes past the container's own edge, at any breakpoint. Height is
+     deliberately not set — auto lets the image's own aspect ratio size the
+     box, so nothing is ever stretched to fit. */
+  width: min(calc((56% - 15px) * 1.95), calc(100% - 48px));
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--landing-radius-md);
+  /* Clips the image's square corners to this radius — a per-card detail, not
+     the container-level clipping the padding-top above accounts for. */
+  overflow: hidden;
+  transform: translateY(var(--stack-hover-lift));
+  transition:
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    top 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    left 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-stack-card picture,
+.landing-stack-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Top step is 46px (was 36px, +10px as requested); left stays at 24px. */
+.landing-stack-card[data-position="back"] {
+  z-index: 10;
+  top: 20px;
+  left: 0;
+}
+
+.landing-stack-card[data-position="middle"] {
+  z-index: 20;
+  top: 66px;
+  left: 24px;
+}
+
+.landing-stack-card[data-position="front"] {
+  z-index: 30;
+  top: 112px;
+  left: 48px;
+}
+
+/* All three cards lift a little on hover, as a hint that they're clickable.
+   -20px exactly cancels the back card's 20px starting `top`, so on hover it
+   rises to the very top of the padded area and stops there — never past it,
+   so its rounded top edge and header stay fully visible. The front card has
+   no such limit to respect (nothing sits above it), so it gets the same
+   -20px for a consistent lift across all three. */
+@media (hover: hover) {
+  .landing-stack-card:hover {
+    --stack-hover-lift: -20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-stack-card {
+    transition: none;
+  }
+}
+
+.landing-stack-card:focus-visible {
+  outline: 2px solid var(--landing-brand-primary);
+  outline-offset: 2px;
+}
+
+.landing-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--landing-space-md);
+}
+
+.landing-icon-20 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ---------- Mission ---------- */
+
+.landing-mission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--landing-space-2xl);
+}
+
+/* Photos are cropped like Figma: centred "cover", then enlarged a little more.
+   Figma scales the Mission photo to 1.2407x and the CTA photo to 1.0909x the size
+   that would just cover their frames, and both stay centred. */
+.landing-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.landing-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.landing-photo-mission img {
+  transform: scale(1.2407);
+}
+
+.landing-mission-image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 260px;
+  border-radius: var(--landing-radius-lg);
+  background: var(--landing-surface-placeholder);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* White Logos lockup centred on the photo: 68px mark, 20px gap, 50px wordmark */
+.landing-mission-lockup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--landing-space-lg);
+  color: var(--landing-surface-white);
+}
+
+.landing-mission-lockup img {
+  display: block;
+  flex-shrink: 0;
+}
+
+.landing-mission-lockup span {
+  font-family: var(--landing-font-display);
+  font-weight: 500;
+  font-size: 50px;
+  line-height: normal;
+}
+
+.landing-mission-text {
+  display: flex;
+  width: 100%;
+  max-width: 434px;
+  flex-direction: column;
+  gap: var(--landing-space-lg);
+}
+
+@media (min-width: 768px) {
+  .landing-mission-image {
+    width: 434px;
+    height: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-mission {
+    flex-direction: row;
+    gap: var(--landing-space-4xl);
+  }
+
+  .landing-mission-image {
+    width: 412px;
+    height: 349px;
+  }
+
+  .landing-mission-text {
+    width: 360px;
+    flex-shrink: 0;
+  }
+}
+
+/* ---------- FAQ ---------- */
+
+.landing-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-md);
+  width: 100%;
+  max-width: 845px;
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .landing-faq-list {
+    max-width: 906px;
+  }
+}
+
+.landing-faq-item {
+  border: 1px solid var(--landing-border-default);
+  border-radius: var(--landing-radius-md);
+  background: var(--landing-surface-white);
+}
+
+.landing-faq-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--landing-space-lg);
+  width: 100%;
+  padding: var(--landing-space-xl) var(--landing-space-2xl);
+  text-align: left;
+  cursor: pointer;
+}
+
+.landing-faq-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 1px solid var(--landing-text-primary);
+  border-radius: var(--landing-radius-full);
+  transition: rotate 200ms ease-out;
+}
+
+.landing-faq-trigger[aria-expanded="true"] .landing-faq-toggle {
+  rotate: 45deg;
+}
+
+.landing-faq-answer {
+  padding: 0 var(--landing-space-2xl) var(--landing-space-xl);
+  margin-top: var(--landing-space-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-md);
+}
+
+/* Keep the answer to a comfortable line length where there is room to spare;
+   on phones the full width is needed to avoid a very narrow column. */
+@media (min-width: 768px) {
+  .landing-faq-answer p {
+    max-width: 65%;
+  }
+}
+
+/* ---------- Closing CTA ---------- */
+
+.landing-cta-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 846px;
+  min-height: 400px;
+  margin-inline: auto;
+  padding: var(--landing-space-3xl) var(--landing-space-xl);
+  border-radius: var(--landing-radius-xl);
+  background: var(--landing-surface-white);
+  overflow: hidden;
+}
+
+/* Figma fades the photo group to 70% over the white page, not over the grey mask
+   fill beneath it, so the card behind the photo is white. */
+.landing-cta-card .landing-photo {
+  opacity: 0.7;
+}
+
+.landing-cta-card .landing-photo img {
+  transform: scale(1.0909);
+}
+
+.landing-cta-content {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--landing-space-lg);
+}
+
+.landing-cta-title {
+  width: 100%;
+  font-family: var(--landing-font-display);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: normal;
+  color: var(--landing-text-black);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .landing-cta-card {
+    min-height: 500px;
+    padding: var(--landing-space-4xl) var(--landing-space-3xl);
+  }
+
+  .landing-cta-title {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-cta-card {
+    max-width: 1200px;
+    min-height: 600px;
+  }
+
+  .landing-cta-title {
+    font-size: 50px;
+  }
+}
+
+/* ---------- Footer ---------- */
+
+/* Gap above the footer. Figma leaves 227px between the CTA card and the logo,
+   of which 60px is the CTA section's own padding. Only that desktop reference
+   exists, so tablet and mobile use the 60px token. */
+.landing-footer {
+  padding-top: var(--landing-space-4xl);
+}
+
+@media (min-width: 1024px) {
+  .landing-footer {
+    padding-top: 167px;
+  }
+}
+
+/* Two columns: the right column is exactly as wide as the tagline, so the link
+   list lines up with the tagline's left edge, as in Figma. */
+.landing-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.landing-footer-muted {
+  color: var(--landing-text-secondary);
+}
+
+.landing-footer-divider {
+  grid-column: 1 / -1;
+  height: 1px;
+  margin: 25px 0 0;
+  border: 0;
+  background: var(--landing-border-default);
+}
+
+/* Measured from the divider's top edge (Figma's line coordinate), the icons sit
+   31px down (Instagram) and 30px down (the taller mail icon) and the first link
+   sits 41px down; the copyright line ends level with the last link. */
+.landing-footer-left {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 29px;
+}
+
+.landing-footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.landing-footer-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-footer-social img {
+  display: block;
+}
+
+.landing-footer-links {
+  display: flex;
+  align-self: start;
+  flex-direction: column;
+  gap: 30px;
+  padding-top: 40px;
+}
+
+.landing-footer-link {
+  display: block;
+  color: var(--landing-text-black);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-root * {
+    transition: none !important;
+  }
+
+  .landing-root {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Waitlist (/waitlist.html) ---------- */
+/* Its own page shell, not the marketing page's sections — reuses .landing-root
+   for tokens, fonts and the same responsive side padding, but replaces the
+   bottom padding with its own full-height flex column. */
+
+.waitlist-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
+.waitlist-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: var(--landing-space-lg);
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .waitlist-header {
+    padding: var(--landing-space-lg) var(--landing-space-xl);
+  }
+}
+
+.waitlist-progress {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.waitlist-progress-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--landing-radius-full);
+  background: var(--landing-border-default);
+}
+
+.waitlist-progress-dot[data-active] {
+  background: var(--landing-text-primary);
+}
+
+.waitlist-body {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--landing-space-2xl);
+  padding: var(--landing-space-3xl) var(--landing-side-padding);
+}
+
+@media (min-width: 1024px) {
+  .waitlist-body-join {
+    flex-direction: row;
+    /* Literal 130px, like the hero section's own gap — above the token scale */
+    gap: 130px;
+  }
+}
+
+.waitlist-hero-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--landing-space-lg);
+  width: 100%;
+  padding: var(--landing-space-2xl);
+  border-radius: var(--landing-radius-md);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .waitlist-hero-card {
+    width: 484px;
+    height: 235px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .waitlist-hero-card {
+    width: 562px;
+    height: 498px;
+  }
+}
+
+.waitlist-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.waitlist-hero-title,
+.waitlist-hero-subtitle,
+.waitlist-hero-count {
+  position: relative;
+  text-align: center;
+  color: var(--landing-surface-white);
+}
+
+.waitlist-hero-title {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 33px;
+  text-wrap: balance;
+}
+
+.waitlist-hero-subtitle {
+  font-family: var(--landing-font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.waitlist-hero-count {
+  font-family: var(--landing-font-display);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.waitlist-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.waitlist-form-content,
+.waitlist-column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--landing-space-xl);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .waitlist-form-content,
+  .waitlist-column {
+    width: 484px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .waitlist-form-content {
+    width: 459px;
+  }
+}
+
+.waitlist-form-title {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 33px;
+  color: var(--landing-brand-primary);
+}
+
+.waitlist-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+}
+
+.waitlist-intro-title {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 33px;
+  color: var(--landing-brand-primary);
+  text-wrap: balance;
+}
+
+.waitlist-intro-subtitle {
+  font-family: var(--landing-font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--landing-text-muted);
+}
+
+/* Step 3's intro is centered; step 2's is left-aligned, matching Figma */
+.waitlist-intro[data-align="center"] {
+  text-align: center;
+}
+
+.waitlist-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+  width: 100%;
+}
+
+.waitlist-field-label {
+  font-family: var(--landing-font-display);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--landing-text-primary);
+}
+
+.waitlist-input,
+.waitlist-textarea {
+  width: 100%;
+  padding: var(--landing-space-md);
+  border-radius: var(--landing-radius-xs);
+  border: 1px solid var(--landing-border-default);
+  background: var(--landing-surface-subtle);
+  font-family: var(--landing-font-body);
+  /* Medium weight for what the visitor typed or picked; the placeholder below
+     drops back to regular, so entered content reads heavier than the hint
+     text, not just darker. */
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--landing-text-primary);
+}
+
+.waitlist-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.waitlist-input::placeholder,
+.waitlist-textarea::placeholder {
+  color: var(--landing-text-secondary);
+  font-weight: 400;
+}
+
+.waitlist-combobox {
+  position: relative;
+}
+
+.waitlist-combobox-input {
+  padding-right: var(--landing-space-3xl);
+}
+
+.waitlist-combobox-input[readonly] {
+  cursor: pointer;
+}
+
+.waitlist-select-chevron {
+  position: absolute;
+  right: var(--landing-space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--landing-text-secondary);
+  pointer-events: none;
+}
+
+/* Matches the nav's dropdown menu: white panel, same border, same shadow. */
+.waitlist-combobox-panel {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + var(--landing-space-xs));
+  left: 0;
+  right: 0;
+  max-height: 296px;
+  overflow-y: auto;
+  margin: 0;
+  padding: var(--landing-space-xs);
+  list-style: none;
+  border: 1px solid var(--landing-border-default);
+  border-radius: var(--landing-radius-md);
+  background: var(--landing-surface-white);
+  box-shadow: 0 12px 32px rgb(28 28 34 / 0.1);
+}
+
+.waitlist-combobox-option {
+  padding: var(--landing-space-sm) var(--landing-space-sm);
+  border-radius: var(--landing-radius-sm);
+  font-family: var(--landing-font-body);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--landing-text-primary);
+  cursor: pointer;
+}
+
+.waitlist-combobox-option[data-highlighted] {
+  background: var(--landing-surface-hover);
+}
+
+.waitlist-combobox-option[aria-selected="true"] {
+  font-weight: 600;
+  color: var(--landing-brand-primary);
+}
+
+/* Focus and error use a 1px ring instead of Figma's 2px border, so the field
+   doesn't shift size when the state changes. */
+.waitlist-input:focus-visible,
+.waitlist-textarea:focus-visible {
+  outline: none;
+  border-color: var(--landing-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--landing-color-focus-ring) inset;
+}
+
+/* The combobox input keeps its ring open while the panel is open (:focus,
+   not just :focus-visible), since clicking an option refocuses it via the
+   mousedown guard below. */
+.waitlist-combobox-input:focus {
+  outline: none;
+  border-color: var(--landing-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--landing-color-focus-ring) inset;
+}
+
+.waitlist-input[data-invalid="true"],
+.waitlist-textarea[data-invalid="true"] {
+  border-color: var(--landing-color-error);
+  box-shadow: 0 0 0 1px var(--landing-color-error) inset;
+}
+
+.waitlist-helper {
+  font-family: var(--landing-font-body);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--landing-color-error);
+}
+
+/* Tighter than .waitlist-column's own gap, so the three choices read as one
+   set of answers rather than separate blocks. */
+.waitlist-choice-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+  width: 100%;
+}
+
+.waitlist-choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--landing-space-md);
+  border-radius: var(--landing-radius-xs);
+  border: 1px solid var(--landing-border-default);
+  background: var(--landing-surface-subtle);
+  font-family: var(--landing-font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--landing-text-primary);
+  text-align: center;
+  cursor: pointer;
+}
+
+.waitlist-choice[aria-pressed="true"] {
+  border-color: var(--landing-color-focus-ring);
+  box-shadow: 0 0 0 1px var(--landing-color-focus-ring) inset;
+}
+
+.waitlist-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landing-space-sm);
+  width: 100%;
+}
+
+.waitlist-continue,
+.waitlist-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--landing-space-sm);
+  width: 100%;
+  height: 42px;
+  padding-inline: var(--landing-space-lg);
+  border-radius: var(--landing-radius-xs);
+  font-family: var(--landing-font-display);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease-out, transform 120ms ease-out;
+}
+
+.waitlist-continue {
+  color: var(--landing-surface-white);
+  background: var(--landing-text-primary);
+}
+
+.waitlist-continue[data-state="ready"] {
+  background: var(--landing-brand-primary);
+}
+
+@media (hover: hover) {
+  .waitlist-continue[data-state="ready"]:hover {
+    background: var(--landing-brand-primary-hover);
+  }
+
+  .waitlist-continue:not([data-state="ready"]):hover {
+    background: #2a2a32;
+  }
+
+  .waitlist-ghost:hover {
+    background: var(--landing-surface-hover);
+  }
+}
+
+.waitlist-continue:active,
+.waitlist-ghost:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waitlist-continue:active,
+  .waitlist-ghost:active {
+    transform: none;
+  }
+}
+
+.waitlist-ghost {
+  color: var(--landing-text-primary);
+  background: var(--landing-surface-white);
+  border: 1px solid var(--landing-border-default);
+}
+
+.waitlist-confirm-title {
+  font-family: var(--landing-font-display);
+  font-weight: 700;
+  font-size: 55px;
+  line-height: 66px;
+  color: var(--landing-brand-primary);
+  text-align: center;
+}
+
+.waitlist-confirm-subtitle {
+  font-family: var(--landing-font-display);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 24px;
+  color: var(--landing-text-primary);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.waitlist-confirm-body {
+  font-family: var(--landing-font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--landing-text-muted);
+  text-align: center;
+}
+
+.waitlist-step-enter {
+  animation: waitlist-fade-in 200ms ease-out;
+}
+
+@keyframes waitlist-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waitlist-step-enter {
+    animation: none;
+  }
+}
