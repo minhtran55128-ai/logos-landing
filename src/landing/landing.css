@@ -633,18 +633,6 @@
   animation: landing-soft-in 800ms ease-out 2100ms both;
 }
 
-@media (hover: hover) {
-  .landing-hero-actions .landing-cta:not(.landing-cta-secondary):hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgb(250 82 15 / 28%);
-  }
-}
-
-.landing-hero-actions .landing-cta {
-  transition-property: color, background-color, transform, box-shadow;
-  transition-duration: 150ms, 150ms, 200ms, 200ms;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .landing-nav,
   .landing-hero-text > *,
