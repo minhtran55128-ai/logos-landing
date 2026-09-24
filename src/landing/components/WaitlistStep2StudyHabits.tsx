@@ -16,7 +16,7 @@ export function WaitlistStep2StudyHabits({
   onHoursChange,
   onFrustrationChange,
   onContinue,
-  onSkip,
+  onBack,
 }: {
   program: string
   hours: string
@@ -26,7 +26,7 @@ export function WaitlistStep2StudyHabits({
   onHoursChange: (value: string) => void
   onFrustrationChange: (value: string) => void
   onContinue: () => void
-  onSkip: () => void
+  onBack: () => void
 }) {
   return (
     <>
@@ -68,7 +68,7 @@ export function WaitlistStep2StudyHabits({
 
           <div className="waitlist-actions">
             <WaitlistContinueButton label={copy.continueLabel} ready={ready} onClick={onContinue} />
-            <WaitlistSkipButton label={copy.skipLabel} onClick={onSkip} />
+            <WaitlistSkipButton label={copy.backLabel} onClick={onBack} />
           </div>
         </div>
       </div>

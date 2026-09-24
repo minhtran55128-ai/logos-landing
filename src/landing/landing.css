@@ -549,6 +549,112 @@
   }
 }
 
+/* Hero entrance in three beats: headline, subtext and buttons rise in from a
+   soft blur; then the nav drops in while the hero image is fades and eases
+   up while it zooms out; last, the trust logos fade in. */
+@keyframes landing-hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes landing-hero-reveal {
+  from {
+    opacity: 0.01;
+    transform: translateY(48px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes landing-hero-zoom {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes landing-nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes landing-soft-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.landing-nav {
+  animation: landing-nav-drop 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 600ms both;
+}
+
+.landing-hero-text > * {
+  animation: landing-hero-rise 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 100ms both;
+}
+
+.landing-hero-text > .landing-hero-sub {
+  animation-delay: 220ms;
+}
+
+.landing-hero-text > .landing-hero-actions {
+  animation-delay: 340ms;
+}
+
+.landing-hero-media {
+  animation: landing-hero-reveal 1600ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
+}
+
+.landing-hero-media img {
+  animation: landing-hero-zoom 2400ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
+}
+
+.landing-trust {
+  animation: landing-soft-in 800ms ease-out 2100ms both;
+}
+
+@media (hover: hover) {
+  .landing-hero-actions .landing-cta:not(.landing-cta-secondary):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgb(250 82 15 / 28%);
+  }
+}
+
+.landing-hero-actions .landing-cta {
+  transition-property: color, background-color, transform, box-shadow;
+  transition-duration: 150ms, 150ms, 200ms, 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-nav,
+  .landing-hero-text > *,
+  .landing-hero-media,
+  .landing-hero-media img,
+  .landing-trust {
+    animation: none;
+  }
+}
+
 .landing-hero-media {
   width: 100%;
   max-width: 1012px;
@@ -811,6 +917,30 @@
 .landing-scene[data-scene="reveal"] [data-reveal][data-revealed="true"] {
   opacity: 1;
   translate: 0 0;
+}
+
+/* Scroll reveal (see lib/useScrollReveal.ts): every element rises the same
+   distance from the same soft blur, over the same time and easing, and
+   only the stagger delay differs. Only [data-sr] elements are affected, and
+   once one has finished it is marked "done" so none of this applies to it. */
+[data-sr="hidden"],
+[data-sr="in"] {
+  transition:
+    opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--sr-delay, 0ms),
+    translate 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--sr-delay, 0ms),
+    filter 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--sr-delay, 0ms);
+}
+
+[data-sr="hidden"] {
+  opacity: 0;
+  translate: 0 24px;
+  filter: blur(4px);
+}
+
+[data-sr="in"] {
+  opacity: 1;
+  translate: 0 0;
+  filter: none;
 }
 
 /* ---------- Legal pages (terms, privacy) ---------- */
@@ -1454,6 +1584,70 @@
   rotate: 45deg;
 }
 
+/* Press and open feedback for the FAQ rows */
+.landing-faq-item {
+  transition:
+    border-color 300ms ease-out,
+    transform 120ms ease-out;
+}
+
+.landing-faq-toggle img {
+  transition: filter 200ms ease-out;
+}
+
+.landing-faq-toggle {
+  transition:
+    rotate 200ms ease-out,
+    background-color 200ms ease-out;
+}
+
+.landing-faq-item:has(.landing-faq-trigger[aria-expanded="true"]) {
+  border-color: var(--landing-text-primary);
+}
+
+.landing-faq-trigger:focus-visible {
+  outline: 2px solid var(--landing-color-focus-ring);
+  outline-offset: -2px;
+  border-radius: var(--landing-radius-md);
+}
+
+@media (hover: hover) {
+  .landing-faq-item:hover {
+    border-color: var(--landing-text-primary);
+  }
+}
+
+.landing-faq-item:has(.landing-faq-trigger:active) {
+  transform: scale(0.995);
+}
+
+/* The answer stays mounted and its row grows from 0 to its natural height,
+   with the text fading in a beat behind, so opening reads as one smooth motion. */
+.landing-faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landing-faq-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.landing-faq-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.landing-faq-panel .landing-faq-answer {
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+}
+
+.landing-faq-panel[data-open="true"] .landing-faq-answer {
+  opacity: 1;
+  transition: opacity 400ms ease-out 150ms;
+}
+
 .landing-faq-answer {
   padding: 0 var(--landing-space-2xl) var(--landing-space-xl);
   margin-top: var(--landing-space-xs);
@@ -2080,22 +2274,66 @@
   text-align: center;
 }
 
-.waitlist-step-enter {
-  animation: waitlist-fade-in 200ms ease-out;
-}
-
-@keyframes waitlist-fade-in {
+/* Step entrance: the same rise-from-a-soft-blur as the marketing page's scroll
+   reveals (24px, 600ms, one shared curve), with only the stagger differing. It
+   plays each time a step mounts. "backwards" fill means nothing is left applied
+   afterwards, so the buttons' own press and focus styles are unaffected. */
+@keyframes waitlist-rise {
   from {
     opacity: 0;
-  }
-
-  to {
-    opacity: 1;
+    translate: 0 24px;
+    filter: blur(4px);
   }
 }
 
+.waitlist-step-enter .waitlist-hero-card,
+.waitlist-step-enter .waitlist-form-content > *,
+.waitlist-step-enter .waitlist-column > *,
+.waitlist-step-enter .waitlist-hero-card > :not(picture) {
+  animation: waitlist-rise 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
+  animation-delay: calc(var(--wl-i, 0) * 80ms);
+}
+
+.waitlist-step-enter .waitlist-hero-card {
+  --wl-i: 0;
+}
+
+.waitlist-step-enter .waitlist-hero-card > :not(picture) {
+  animation-delay: calc(150ms + var(--wl-i, 0) * 80ms);
+}
+
+.waitlist-step-enter .waitlist-form-content,
+.waitlist-step-enter .waitlist-column {
+  --wl-base: 1;
+}
+
+.waitlist-step-enter .waitlist-form-content > *,
+.waitlist-step-enter .waitlist-column > * {
+  animation-delay: calc((var(--wl-base) + var(--wl-i, 0)) * 80ms);
+}
+
+.waitlist-hero-card > :nth-child(2) { --wl-i: 0; }
+.waitlist-hero-card > :nth-child(3) { --wl-i: 1; }
+.waitlist-hero-card > :nth-child(4) { --wl-i: 2; }
+
+.waitlist-form-content > :nth-child(1),
+.waitlist-column > :nth-child(1) { --wl-i: 0; }
+.waitlist-form-content > :nth-child(2),
+.waitlist-column > :nth-child(2) { --wl-i: 1; }
+.waitlist-form-content > :nth-child(3),
+.waitlist-column > :nth-child(3) { --wl-i: 2; }
+.waitlist-form-content > :nth-child(4),
+.waitlist-column > :nth-child(4) { --wl-i: 3; }
+.waitlist-form-content > :nth-child(5),
+.waitlist-column > :nth-child(5) { --wl-i: 4; }
+.waitlist-form-content > :nth-child(6),
+.waitlist-column > :nth-child(6) { --wl-i: 5; }
+
 @media (prefers-reduced-motion: reduce) {
-  .waitlist-step-enter {
+  .waitlist-step-enter .waitlist-hero-card,
+  .waitlist-step-enter .waitlist-form-content > *,
+  .waitlist-step-enter .waitlist-column > *,
+  .waitlist-step-enter .waitlist-hero-card > :not(picture) {
     animation: none;
   }
 }

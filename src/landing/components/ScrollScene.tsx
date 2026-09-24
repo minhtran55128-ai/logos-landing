@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, type CSSProperties } from "react"
 
 import { features, SECTION_IDS, showcaseCards } from "../data/content"
 import { useScrollScene } from "../lib/useScrollScene"
@@ -22,20 +22,27 @@ export function ScrollScene() {
       aria-labelledby="landing-scene-title"
     >
       <div className="landing-scene-header" data-scene-header>
-        <h2 id="landing-scene-title" className="landing-section-title">
+        <h2 id="landing-scene-title" className="landing-section-title" data-sr>
           {features.title}
         </h2>
-        <p className="landing-body max-w-[460px]">{features.intro}</p>
+        <p
+          className="landing-body max-w-[460px]"
+          data-sr
+          style={{ "--sr-delay": "100ms" } as CSSProperties}
+        >
+          {features.intro}
+        </p>
       </div>
 
       <div className="landing-feature-grid">
-        {features.cards.map((card) => (
+        {features.cards.map((card, index) => (
           <FeatureCard
             key={card.tone}
             tone={card.tone}
             title={card.title}
             description={card.description}
             image={card.image}
+            index={index}
           />
         ))}
       </div>

@@ -302,7 +302,7 @@ export const footer = {
 
 // The 4-step waitlist flow at /waitlist.html. Steps 1 and 3 require an answer
 // before Continue is enabled; step 2's fields are both optional, so Continue is
-// always enabled there. "Hoppa över" on steps 2 and 3 skips straight to the next
+// always enabled there. "Hoppa över" on step 3 skips straight to the next
 // step without requiring an answer.
 export const waitlist = {
   step1: {
@@ -367,7 +367,7 @@ export const waitlist = {
     frustrationPlaceholder:
       "Tänk på det som tar mest kraft, skapar frustration eller står i vägen för effektivt pluggande.",
     continueLabel: "Fortsätt",
-    skipLabel: "Hoppa över",
+    backLabel: "Tillbaka",
   },
   step3: {
     title: "Skulle du vara öppen för att testa Logos med oss?",

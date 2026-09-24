@@ -1,4 +1,5 @@
 import { BookOpen, Brain, Target, TrendingUp } from "lucide-react"
+import type { CSSProperties } from "react"
 
 import type { FeatureTone, LandingImage } from "../data/content"
 
@@ -23,9 +24,10 @@ type FeatureCardProps = {
   title: string
   description: string
   image?: LandingImage
+  index?: number
 }
 
-export function FeatureCard({ tone, title, description, image }: FeatureCardProps) {
+export function FeatureCard({ tone, title, description, image, index = 0 }: FeatureCardProps) {
   const colors = toneVars[tone]
   const Icon = toneIcons[tone]
   // The x descriptor makes the browser size the image at (pixel size / density).
@@ -38,7 +40,11 @@ export function FeatureCard({ tone, title, description, image }: FeatureCardProp
       data-scene-intake
       data-reveal
     >
-      <div className="landing-feature-card-content">
+      <div
+        className="landing-feature-card-content"
+        data-sr-wide
+        style={{ "--sr-delay": `${100 + index * 80}ms` } as CSSProperties}
+      >
         <div className="landing-feature-card-header">
           <span className="landing-feature-card-icon" style={{ background: colors.panel }} aria-hidden="true">
             <Icon size={20} />
@@ -47,7 +53,11 @@ export function FeatureCard({ tone, title, description, image }: FeatureCardProp
         </div>
         <p className="landing-body">{description}</p>
       </div>
-      <div className="landing-feature-card-visual" style={{ background: colors.panel }}>
+      <div
+        className="landing-feature-card-visual"
+        data-sr-wide
+        style={{ background: colors.panel, "--sr-delay": `${180 + index * 80}ms` } as CSSProperties}
+      >
         {image ? (
           <picture>
             <source srcSet={`${image.webp} ${density}x`} type="image/webp" />

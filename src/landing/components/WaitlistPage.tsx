@@ -61,7 +61,7 @@ export function WaitlistPage() {
           onHoursChange={setHours}
           onFrustrationChange={setFrustration}
           onContinue={() => setStep(3)}
-          onSkip={() => setStep(3)}
+          onBack={() => setStep(1)}
         />
       )}
 

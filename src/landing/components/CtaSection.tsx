@@ -6,7 +6,7 @@ export function CtaSection() {
 
   return (
     <section className="landing-shell landing-section landing-section-cta">
-      <div className="landing-cta-card">
+      <div className="landing-cta-card" data-sr="image">
         <picture className="landing-photo">
           <source srcSet={image.webp} type="image/webp" />
           <img

@@ -1,4 +1,4 @@
-import { useId } from "react"
+import { useId, type CSSProperties } from "react"
 
 import iconPlus from "../assets/icon-plus.svg"
 
@@ -7,13 +7,18 @@ type FaqItemProps = {
   answer: string
   isExpanded: boolean
   onToggle: () => void
+  revealDelay?: number
 }
 
-export function FaqItem({ question, answer, isExpanded, onToggle }: FaqItemProps) {
+export function FaqItem({ question, answer, isExpanded, onToggle, revealDelay = 0 }: FaqItemProps) {
   const answerId = useId()
 
   return (
-    <div className="landing-faq-item">
+    <div
+      className="landing-faq-item"
+      data-sr
+      style={{ "--sr-delay": `${revealDelay}ms` } as CSSProperties}
+    >
       <button
         type="button"
         className="landing-faq-trigger"
@@ -27,15 +32,17 @@ export function FaqItem({ question, answer, isExpanded, onToggle }: FaqItemProps
         </span>
       </button>
 
-      {isExpanded ? (
-        <div id={answerId} className="landing-faq-answer">
-          {answer.split("\n\n").map((paragraph) => (
-            <p key={paragraph} className="landing-body">
-              {paragraph}
-            </p>
-          ))}
+      <div className="landing-faq-panel" data-open={isExpanded} inert={!isExpanded}>
+        <div className="landing-faq-panel-inner">
+          <div id={answerId} className="landing-faq-answer">
+            {answer.split("\n\n").map((paragraph) => (
+              <p key={paragraph} className="landing-body">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </div>
-      ) : null}
+      </div>
     </div>
   )
 }
