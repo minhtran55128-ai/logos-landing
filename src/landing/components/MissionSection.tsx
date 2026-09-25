@@ -6,8 +6,8 @@ import { mission, SECTION_IDS } from "../data/content"
 export function MissionSection() {
   return (
     <section id={SECTION_IDS.mission} className="landing-shell landing-section landing-section-mission">
-      <div className="landing-mission">
-        <div className="landing-mission-image" data-sr="image">
+      <div className="landing-mission" data-sr-group>
+        <div className="landing-mission-image" data-sr-item>
           <picture className="landing-photo landing-photo-mission">
             <source srcSet={mission.image.webp} type="image/webp" />
             <img
@@ -27,7 +27,7 @@ export function MissionSection() {
 
         <div className="landing-mission-text">
           <h2
-            data-sr
+            data-sr-item
             className="landing-section-title-semibold"
             style={
               {
@@ -47,7 +47,7 @@ export function MissionSection() {
             {mission.paragraphs.map((paragraph, index) => (
               <p
                 key={paragraph}
-                data-sr
+                data-sr-item
                 style={{ "--sr-delay": `${200 + index * 80}ms` } as CSSProperties}
                 className="landing-body"
               >

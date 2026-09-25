@@ -20,7 +20,15 @@ export function useScrollReveal(ref: RefObject<HTMLElement | null>) {
     const items = Array.from(
       root.querySelectorAll<HTMLElement>(wide ? "[data-sr], [data-sr-wide]" : "[data-sr]"),
     )
-    items.forEach((item) => {
+    // A [data-sr-group] reveals all of its [data-sr-item]s together, in order,
+    // once the group as a whole scrolls into view, rather than each item
+    // popping in on its own as it crosses the edge of the screen.
+    const groups = Array.from(root.querySelectorAll<HTMLElement>("[data-sr-group]"))
+    const groupItems = new Map(
+      groups.map((group) => [group, Array.from(group.querySelectorAll<HTMLElement>("[data-sr-item]"))]),
+    )
+    const all = [...items, ...Array.from(groupItems.values()).flat()]
+    all.forEach((item) => {
       item.dataset.sr = "hidden"
     })
 
@@ -31,29 +39,41 @@ export function useScrollReveal(ref: RefObject<HTMLElement | null>) {
       el.removeEventListener("transitionend", finish)
     }
 
+    const show = (list: HTMLElement[], plain: boolean) => {
+      for (const el of list) {
+        if (plain) {
+          el.dataset.sr = "done"
+          continue
+        }
+        el.dataset.sr = "in"
+        el.addEventListener("transitionend", finish)
+      }
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const el = entry.target as HTMLElement
+          const list = [...(el.hasAttribute("data-sr") ? [el] : []), ...(groupItems.get(el) ?? [])]
           // Already scrolled past (anchor jump, restored scroll): show it plainly.
           if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
-            el.dataset.sr = "done"
+            show(list, true)
             observer.unobserve(el)
             continue
           }
           if (!entry.isIntersecting) continue
-          el.dataset.sr = "in"
-          el.addEventListener("transitionend", finish)
+          show(list, false)
           observer.unobserve(el)
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.15, rootMargin: "0px 0px -12% 0px" },
     )
     items.forEach((item) => observer.observe(item))
+    groups.forEach((group) => observer.observe(group))
 
     return () => {
       observer.disconnect()
-      items.forEach((item) => {
+      all.forEach((item) => {
         item.removeEventListener("transitionend", finish)
         item.dataset.sr = "done"
       })

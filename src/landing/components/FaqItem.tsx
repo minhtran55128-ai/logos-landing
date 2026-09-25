@@ -7,18 +7,13 @@ type FaqItemProps = {
   answer: string
   isExpanded: boolean
   onToggle: () => void
-  revealDelay?: number
 }
 
-export function FaqItem({ question, answer, isExpanded, onToggle, revealDelay = 0 }: FaqItemProps) {
+export function FaqItem({ question, answer, isExpanded, onToggle }: FaqItemProps) {
   const answerId = useId()
 
   return (
-    <div
-      className="landing-faq-item"
-      data-sr
-      style={{ "--sr-delay": `${revealDelay}ms` } as CSSProperties}
-    >
+    <div className="landing-faq-item" data-sr data-sr-group>
       <button
         type="button"
         className="landing-faq-trigger"
@@ -26,8 +21,18 @@ export function FaqItem({ question, answer, isExpanded, onToggle, revealDelay = 
         aria-controls={answerId}
         onClick={onToggle}
       >
-        <span className="landing-h3 min-w-0 flex-1">{question}</span>
-        <span className="landing-faq-toggle">
+        <span
+          className="landing-h3 min-w-0 flex-1"
+          data-sr-item
+          style={{ "--sr-delay": "120ms" } as CSSProperties}
+        >
+          {question}
+        </span>
+        <span
+          className="landing-faq-toggle"
+          data-sr-item
+          style={{ "--sr-delay": "200ms" } as CSSProperties}
+        >
           <img src={iconPlus} alt="" width={12.6667} height={12.6667} />
         </span>
       </button>

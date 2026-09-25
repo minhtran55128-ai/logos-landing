@@ -18,7 +18,6 @@ export function FaqSection() {
               key={item.question}
               question={item.question}
               answer={item.answer}
-              revealDelay={(index + 1) * 80}
               isExpanded={openIndex === index}
               onToggle={() => setOpenIndex(openIndex === index ? null : index)}
             />
